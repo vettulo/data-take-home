@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  coverage_api:
+    build:
+      context: ./coverage-api/
+    volumes:
+      - ./coverage-api:/src
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql_db
+      - mongo_db
+
+  clearinghouse_api:
+    build:
+      context: ./mock-clearinghouse-api
+    volumes:
+      - ./mock-clearinghouse-api:/src
+    ports:
+      - "8001:8001"
+
+  mysql_db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: nirvana
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+
+  mongo_db:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_DATABASE: nirvana
+    ports:
+      - "27017:27017"
