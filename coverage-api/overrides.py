@@ -23,9 +23,12 @@ def get_overrides(member_id, member_dob):
             result = cursor.fetchone()
 
     logger.info("Found override: %s", result)
-    return {
-        "copay": result[2],
-        "coinsurance": result[3],
-        "deductible": result[4],
-        "oop_max": result[5],
-    }
+    if result:
+        return {
+            "copay": result[2],
+            "coinsurance": result[3],
+            "deductible": result[4],
+            "oop_max": result[5],
+        }
+    else:
+        return {}
