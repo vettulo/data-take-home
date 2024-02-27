@@ -29,6 +29,10 @@ services:
       MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
+    volumes:
+      - ./overrides-seed-data/data:/var/lib/mysql
+      - ./overrides-seed-data/init:/docker-entrypoint-initdb.d
+      - ./overrides-seed-data/sql_config:/etc/mysql/conf.d
 
   mongo_db:
     image: mongo:latest
