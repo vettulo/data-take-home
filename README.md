@@ -53,7 +53,7 @@ Make sure you have Docker and Docker Compose installed on your machine.
 
    - **coverage-api**: http://localhost:8000
    - **mock-clearinghouse-api**: http://localhost:8001
-   - **MySQL Database**: Host: `localhost`, Port: `3306`, Database: `nirvana`, User: `root`, Password: `root`
+   - **MySQL Database**: Host: `localhost`, Port: `3306`, Database: `nirvana`, User: `admin`, Password: `password`
    - **MongoDB**: Host: `localhost`, Port: `27017`
 
 ## Usage
