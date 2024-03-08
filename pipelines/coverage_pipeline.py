@@ -18,7 +18,9 @@ def transfer_data(context):
     conn = pymysql.connect(**db_config)
     try:
         with conn.cursor() as cursor:
-            select_query = "SELECT customer_id, member_id, member_dob, timestamp FROM coverage_raw where timestamp < '2023-03-01'"
+
+            # TODO: date is hardcoded but should be modified so that it takes last day or last week for example
+            select_query = "SELECT customer_id, member_id, member_dob, timestamp FROM coverage_raw where timestamp > '2023-03-01'"
 
             cursor.execute(select_query)
 
@@ -26,19 +28,18 @@ def transfer_data(context):
             context.log.info("Show rows")
             context.log.info(rows)
 
-            # Upsert is necessary to have idempotency - This is achieved with
-            # "ON DUPLICATE KEY" in MySQL
-            insert_query = "INSERT INTO api_calls (customer_id, member_id, member_dob, timestamp) VALUES (%s, %s, %s, %s) ON DUPLICATE KEY UPDATE member_id = VALUES(member_id), member_dob = VALUES(member_dob), timestamp = CURRENT_TIMESTAMP"
+            # Upsert is necessary to have idempotency
+            # This is achieved with INSERT IGNORE and the UNIKE KEY in the definition
+            insert_query = "INSERT IGNORE INTO api_calls (customer_id, member_id, member_dob, timestamp) VALUES (%s, %s, %s, %s) ON DUPLICATE KEY UPDATE member_id = VALUES(member_id), member_dob = VALUES(member_dob), timestamp = CURRENT_TIMESTAMP"
 
             for row in rows:
                 cursor.execute(insert_query, row)
 
             conn.commit()
+            context.log.info("Data transfer complete.")
 
     finally:
         conn.close()
-
-    context.log.info("Data transfer complete.")
 
 
 defs = Definitions(
