@@ -3,3 +3,7 @@ local_artifact_storage:
   class: LocalArtifactStorage
   config:
     base_dir: "/opt/dagster/local/"
+
+scheduler:
+  module: dagster.core.scheduler
+  class: DagsterDaemonScheduler

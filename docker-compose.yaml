@@ -66,3 +66,13 @@ services:
 
     environment:
       DAGSTER_HOME: "/opt/dagster/dagster_home/"
+
+  dagster-daemon:
+      build: ./pipelines
+      volumes:
+        - "./pipelines/coverage_pipeline.py:/opt/dagster/app/coverage_pipeline.py"
+        - "./pipelines/workspace.yaml:/opt/dagster/app/workspace.yaml"
+        - "./pipelines/dagster.yaml:/opt/dagster/dagster_home/dagster.yaml"
+      environment:
+        DAGSTER_HOME: "/opt/dagster/dagster_home/"
+      entrypoint: ["dagster-daemon", "run"]
