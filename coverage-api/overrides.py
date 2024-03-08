@@ -1,4 +1,5 @@
 import logging
+
 import pymysql
 
 logger = logging.getLogger()
