@@ -54,3 +54,15 @@ services:
       MONGO_INITDB_DATABASE: nirvana
     ports:
       - "27017:27017"
+
+  dagster-webserver:
+    build: ./pipelines
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./pipelines/coverage_pipeline.py:/opt/dagster/app/coverage_pipeline.py"
+      - "./pipelines/workspace.yaml:/opt/dagster/app/workspace.yaml"
+      - "./pipelines/dagster.yaml:/opt/dagster/dagster_home/dagster.yaml"
+
+    environment:
+      DAGSTER_HOME: "/opt/dagster/dagster_home/"
