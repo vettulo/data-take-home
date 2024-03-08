@@ -37,3 +37,23 @@ SET
   ch_response_oop_max = NULLIF(@ch_response_oop_max, ''),
   timestamp = STR_TO_DATE(@timestamp, '%c/%e/%Y') 
 ;
+
+
+CREATE TABLE IF NOT EXISTS api_calls (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    customer_id VARCHAR(50),
+    member_id VARCHAR(50),
+    member_dob DATE,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_member (member_id, member_dob, timestamp)
+);
+
+CREATE TABLE IF NOT EXISTS members (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    customer_id VARCHAR(50),
+    member_id VARCHAR(50),
+    member_dob DATE,
+    payer_id VARCHAR(50),
+    overriden_times INT,
+    UNIQUE KEY unique_member (member_id, member_dob)
+);

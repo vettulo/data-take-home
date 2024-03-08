@@ -1,6 +1,6 @@
 .idea/
 __pycache__
 *.pyc
-
+.pipelines/
 overrides-seed-data/data
 analytics-data/data
