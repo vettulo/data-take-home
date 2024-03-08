@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   coverage_api:
@@ -33,6 +33,20 @@ services:
       - ./overrides-seed-data/data:/var/lib/mysql
       - ./overrides-seed-data/init:/docker-entrypoint-initdb.d
       - ./overrides-seed-data/sql_config:/etc/mysql/conf.d
+
+  mysql_db_analytics:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: analytics
+      MYSQL_ROOT_PASSWORD: root_password_analytics
+      MYSQL_USER: admin_analytics
+      MYSQL_PASSWORD: password_analytics
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./analytics-data/data:/var/lib/mysql
+      - ./analytics-data/init:/docker-entrypoint-initdb.d
+      - ./analytics-data/sql_config:/etc/mysql/conf.d
 
   mongo_db:
     image: mongo:latest
