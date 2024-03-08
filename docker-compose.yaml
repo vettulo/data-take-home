@@ -47,7 +47,7 @@ services:
       - ./analytics-data/data:/var/lib/mysql
       - ./analytics-data/init:/docker-entrypoint-initdb.d
       - ./analytics-data/sql_config:/etc/mysql/conf.d
-
+ 
   mongo_db:
     image: mongo:latest
     environment:
