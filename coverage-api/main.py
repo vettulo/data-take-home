@@ -6,7 +6,6 @@ from fastapi import FastAPI, Header, status
 from models import CoverageRawModel, CoverageRequest
 from mongo import write_to_mongo
 from overrides import get_overrides
-from pydantic import BaseModel
 
 CLEARINGHOUSE_URL = "http://clearinghouse_api:8001"
 
@@ -66,9 +65,8 @@ async def root(
         "oop_max": clearinghouse_response.get("oop_max"),
     }
 
-    logger.info("Writing to mongo: %s", overrides)
+    logger.info("Writing to mongo")
 
-    logger.info(bool(overrides))
     write_to_analytics(
         CoverageRawModel(
             customer_id=customer_id,
@@ -86,5 +84,6 @@ async def root(
             overriden=bool(overrides),
         )
     )
+    logger.info("Writing to analytics")
 
     return merged_result

@@ -20,7 +20,7 @@ def transfer_data_api_calls(context):
         with conn.cursor() as cursor:
 
             # TODO: date is hardcoded but should be modified so that it takes last day or last week for example
-            select_query = "SELECT customer_id, member_id, member_dob, timestamp FROM coverage_raw where timestamp > '2023-03-01'"
+            select_query = "SELECT customer_id, member_id, member_dob, overriden, timestamp FROM coverage_raw where timestamp > '2023-03-01'"
 
             cursor.execute(select_query)
 
@@ -30,7 +30,7 @@ def transfer_data_api_calls(context):
 
             # Upsert is necessary to have idempotency
             # This is achieved with INSERT IGNORE and the UNIKE KEY in the definition
-            insert_query = "INSERT IGNORE INTO api_calls (customer_id, member_id, member_dob, timestamp) VALUES (%s, %s, %s, %s)"
+            insert_query = "INSERT IGNORE INTO api_calls (customer_id, member_id, member_dob, overriden, timestamp) VALUES (%s, %s, %s, %s, %s)"
 
             for row in rows:
                 cursor.execute(insert_query, row)

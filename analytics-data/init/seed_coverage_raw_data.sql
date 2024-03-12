@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS api_calls (
     customer_id VARCHAR(50),
     member_id VARCHAR(50),
     member_dob DATE,
+    overriden BOOL,
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY unique_member (member_id, member_dob, timestamp)
 );
