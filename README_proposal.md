@@ -81,6 +81,7 @@ Note: to connect to MySQL directly or from metabase you need to configure `allow
 - Unit tests are necessary for the api and dagster pipelines
 - Pipelines should be able to be scheduled and allow the transactions to be idempotent
 - Write to analytics should be async
+- Add logs
 
 ## Future improvements
 
